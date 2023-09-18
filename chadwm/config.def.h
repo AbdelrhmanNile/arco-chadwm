@@ -26,7 +26,7 @@ static const int systraypinningfailfirst =
 static const int showsystray = 1; /* 0 means no systray */
 static const int showbar = 1;     /* 0 means no bar */
 static const int showtab = showtab_auto;
-static const int toptab = 1;      /* 0 means bottom tab */
+static const int toptab = 0;      /* 0 means bottom tab */
 static const int floatbar = 1;    /* 1 means the bar will float(don't have
                                      padding),0 means the bar have padding */
 static const int topbar = 1;      /* 0 means bottom bar */
@@ -59,8 +59,8 @@ static const char *fonts[] = {"JetBrainsMono Nerd Font:style:medium:size=12"};
 //#include "themes/onedark.h"
 //#include "themes/catppuccin.h"
 //#include "themes/nord.h"
-#include "themes/gruvchad.h"
-//#include "themes/dracula.h"
+// #include "themes/gruvchad.h"
+#include "themes/dracula.h"
 
 static const char *colors[][3] = {
     /*                     fg       bg      border */
@@ -198,8 +198,8 @@ static const Key keys[] = {
      SHCMD("maim --select | xclip -selection clipboard -t image/png")},
 
     //{ MODKEY,                           XK_c,       spawn, SHCMD("rofi -show
-    //drun") }, { MODKEY,                           XK_Return,  spawn,
-    //SHCMD("st")},
+    // drun") }, { MODKEY,                           XK_Return,  spawn,
+    // SHCMD("st")},
 
     // toggle stuff
     {MODKEY, XK_b, togglebar, {0}},
@@ -272,7 +272,7 @@ static const Key keys[] = {
 
     // kill dwm
     //{ MODKEY|ControlMask,               XK_q,       spawn, SHCMD("killall
-    //bar.sh dwm") },
+    // bar.sh dwm") },
 
     // kill window
     {MODKEY, XK_q, killclient, {0}},

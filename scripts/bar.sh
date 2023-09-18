@@ -6,13 +6,15 @@
 interval=0
 
 # load colors
-. ~/.config/arco-chadwm/scripts/bar_themes/gruvchad
+. ~/.config/arco-chadwm/scripts/bar_themes/dracula
 
 cpu() {
-  cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
+  #cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
+  # echo ""$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"%"
+  cpu_perc="$((100-$(vmstat 1 2|tail -1|awk '{print $15}')))"
 
-  printf "^c$white^  ^b$black^ CPU"
-  printf "^c$white^ ^b$black^ $cpu_val"
+  printf "^c$black^ ^b$darkblue^ CPU"
+  printf "^c$white^ ^b$grey^ $cpu_perc%%"
 }
 
 pkg_updates() {
@@ -27,12 +29,18 @@ pkg_updates() {
 
 battery() {
   get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
-  printf "^c$blue^   $get_capacity"
+  get_status="$(cat /sys/class/power_supply/BAT0/status)"
+
+  if [ "$get_status" = "Charging" ]; then
+    printf "^c$green^   $get_capacity"
+  else
+    printf "^c$blue^   $get_capacity"
+  fi
 }
 
 brightness() {
   printf "^c$red^   "
-  printf "^c$red^%.0f\n" $(cat /sys/class/backlight/*/brightness)
+  printf "^c$red^%.0f\n" $(xbacklight)
 }
 
 mem() {
@@ -50,6 +58,10 @@ wlan() {
 clock() {
 	printf "^c$black^ ^b$darkblue^  "
 	printf "^c$black^^b$blue^ $(date '+%d/%m/%y %I:%M %p')  "
+}
+
+sep() {
+  printf "^c$black^ ^b$black^"
 }
 
 while true; do

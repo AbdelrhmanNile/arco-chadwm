@@ -10,7 +10,7 @@ function run {
     $@&
   fi
 }
-run "dex $HOME/.config/autostart/arcolinux-welcome-app.desktop"
+#run "dex $HOME/.config/autostart/arcolinux-welcome-app.desktop"
 #run "xrandr --output VGA-1 --primary --mode 1360x768 --pos 0x0 --rotate normal"
 #run "xrandr --output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off"
 #run xrandr --output eDP-1 --primary --mode 1368x768 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output DP-2 --off --output HDMI-2 --off
@@ -30,15 +30,17 @@ run "/usr/lib/xfce4/notifyd/xfce4-notifyd"
 run "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 picom -b  --config ~/.config/arco-chadwm/picom/picom.conf &
 run "numlockx on"
-run "volumeicon"
+volumeicon &
 #run "pa-applet"
+pkill sxhkd
 sxhkd -c ~/.config/arco-chadwm/sxhkd/sxhkdrc &
 #run "nitrogen --restore"
 #run "conky -c $HOME/.config/arco-chadwm/conky/system-overview"
 #you can set wallpapers in themes as well
 #feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
 #feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
-feh --bg-fill ~/.config/arco-chadwm/wallpaper/5m5kLI9.png &
+#feh --bg-fill ~/Pictures/wall/gruvcas.png &
+feh --bg-fill ~/.config/arco-chadwm/wallpaper/drac.jpg &
 #feh --randomize --bg-fill /home/erik/Insync/Apps/Wallhaven/*
 
 
