@@ -22,7 +22,7 @@ function run {
 #autorandr horizontal
 
 run "nm-applet"
-run "pamac-tray"
+#run "pamac-tray"
 #run "variety"
 run "xfce4-power-manager"
 #run "blueberry-tray"
@@ -30,7 +30,6 @@ run "/usr/lib/xfce4/notifyd/xfce4-notifyd"
 run "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 picom -b  --config ~/.config/arco-chadwm/picom/picom.conf &
 run "numlockx on"
-volumeicon &
 #run "pa-applet"
 pkill sxhkd
 sxhkd -c ~/.config/arco-chadwm/sxhkd/sxhkdrc &
@@ -58,6 +57,9 @@ feh --bg-fill ~/.config/arco-chadwm/wallpaper/drac.jpg &
 #run "telegram-desktop"
 #run "dropbox"
 
+ibus-daemon -rxR &
+run "volumeicon" 
 pkill bar.sh
 ~/.config/arco-chadwm/scripts/bar.sh &
+run "volumeicon"
 while type chadwm >/dev/null; do chadwm && continue || break; done

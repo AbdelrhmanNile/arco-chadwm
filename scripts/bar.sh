@@ -6,15 +6,13 @@
 interval=0
 
 # load colors
-. ~/.config/arco-chadwm/scripts/bar_themes/dracula
+. ~/.config/arco-chadwm/scripts/bar_themes/rosepine_moon
 
 cpu() {
-  #cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
-  # echo ""$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"%"
   cpu_perc="$((100-$(vmstat 1 2|tail -1|awk '{print $15}')))"
 
-  printf "^c$black^ ^b$darkblue^ CPU"
-  printf "^c$white^ ^b$grey^ $cpu_perc%%"
+  printf "^c$black^ ^b$rose^ CPU"
+  printf "^c$white^ ^b$hl^  $cpu_perc%% "
 }
 
 pkg_updates() {
@@ -32,20 +30,34 @@ battery() {
   get_status="$(cat /sys/class/power_supply/BAT0/status)"
 
   if [ "$get_status" = "Charging" ]; then
-    printf "^c$green^   $get_capacity"
+    printf "^c$black^^b$gold^   "
+    printf "^c$white^^b$hl^  $get_capacity%% "
   else
-    printf "^c$blue^   $get_capacity"
+    if [ $get_capacity -gt 90 ]; then
+      printf "^c$black^^b$green^   "
+    elif [ $get_capacity -lt 90 ] && [ $get_capacity -gt 60 ]; then
+      printf "^c$black^^b$green^   "
+    elif [ $get_capacity -lt 60 ] && [ $get_capacity -gt 40 ]; then
+      printf "^c$black^^b$green^   "
+    elif [ $get_capacity -lt 40 ] && [ $get_capacity -gt 25 ]; then
+      printf "^c$black^^b$green^   "
+    elif [ $get_capacity -lt 25 ] && [ $get_capacity -gt 15 ]; then
+      printf "^c$black^^b$red^   "
+    elif [ $get_capacity -lt 15 ] && [ $get_capacity -gt 0 ]; then
+      printf "^c$black^^b$red^   "
+    fi
+    printf "^c$white^^b$hl^  $get_capacity%% "
   fi
 }
 
 brightness() {
-  printf "^c$red^   "
-  printf "^c$red^%.0f\n" $(xbacklight)
+  printf "^c$black^^b$red^   "
+  printf "^c$white^^b$hl^  %.0f\n" $(xbacklight -get)
 }
 
 mem() {
-  printf "^c$blue^^b$black^  "
-  printf "^c$blue^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  printf "^c$black^^b$blue^ MEM"
+  printf "^c$white^ ^b$hl^  $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 wlan() {
@@ -56,8 +68,8 @@ wlan() {
 }
 
 clock() {
-	printf "^c$black^ ^b$darkblue^  "
-	printf "^c$black^^b$blue^ $(date '+%d/%m/%y %I:%M %p')  "
+	printf "^c$black^ ^b$darkblue^  "
+	printf "^c$white^^b$hl^ $(date '+%d/%m/%y %I:%M %p') "
 }
 
 sep() {
@@ -66,8 +78,6 @@ sep() {
 
 while true; do
 
-  [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
-  interval=$((interval + 1))
 
   sleep 2 && xsetroot -name "$(battery) $(brightness) $(cpu) $(mem) $(clock)"
 done
